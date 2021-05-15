@@ -22,8 +22,7 @@ samples, guidance on mobile development, and a full API reference.
 These two used to register providers 
 
 #### Provider and Consumer
-Provider - where you wants a rebuild whenever the notifyChange is called__
-Consumer - where you wants a small part to be rebuild not the whole class__
+Provider - where you wants a rebuild whenever the notifyChange is called</br>
+Consumer - where you wants a small part to be rebuild not the whole class</br>
 Both are generic type
 
-## ChangeNotifier mixin is used to use providers in the Package
