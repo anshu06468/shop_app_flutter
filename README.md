@@ -17,8 +17,8 @@ samples, guidance on mobile development, and a full API reference.
 
 # Widgets used
 
-#### ChangeNotifierProvider 
-#### ChangeNotifierProvider.value
+- #### ChangeNotifierProvider 
+- #### ChangeNotifierProvider.value
 These two used to register providers 
 
 #### Provider and Consumer
