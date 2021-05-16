@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './../providers/cart.dart';
 import './../providers/product.dart';
-import 'package:shop/screens/product_details_screen.dart';
+import './../screens/product_details_screen.dart';
 
 class ProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final prod = Provider.of<Product>(context, listen: false);
+    final cart = Provider.of<Cart>(context, listen: false);
     // Consumer used to stop unneceesary reun of build
     // it helps to build only that part of data which requires that
 
@@ -41,9 +43,11 @@ class ProductItem extends StatelessWidget {
             trailing: IconButton(
               icon: Icon(
                 Icons.shopping_cart,
-                color: Theme.of(context).accentColor,
               ),
-              onPressed: () {},
+              color: Theme.of(context).accentColor,
+              onPressed: () {
+                cart.addItem(prod.id, prod.price, prod.title);
+              },
             ),
             title: Text(
               prod.title,

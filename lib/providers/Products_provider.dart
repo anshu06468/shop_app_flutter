@@ -38,8 +38,27 @@ class Products with ChangeNotifier {
   ];
 
   List<Product> get items {
+    // if (_showFavouritesOnly) {
+    //   return _items.where((element) => element.isFavourite).toList();
+    // } else
     return [..._items];
   }
+
+  List<Product> get showFav {
+    return _items.where((element) => element.isFavourite).toList();
+  }
+  //  this should not be used to show favourates data since it will affect everywhere in the app
+  // to avoid this we should use local wise provider
+
+  // void showFavouriteOnly() {
+  //   _showFavouritesOnly = true;
+  //   notifyListeners();
+  // }
+
+  // void showAll() {
+  //   _showFavouritesOnly = false;
+  //   notifyListeners();
+  // }
 
   Product findById(String id) {
     return _items.firstWhere((prod) => prod.id == id);
