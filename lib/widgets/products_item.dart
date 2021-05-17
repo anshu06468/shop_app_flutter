@@ -25,7 +25,7 @@ class ProductItem extends StatelessWidget {
             fit: BoxFit.cover,
           ),
           footer: GridTileBar(
-            backgroundColor: Colors.black87,
+            backgroundColor: Colors.black,
             leading: Consumer<Product>(
               builder: (ctx, prod, child) => IconButton(
                 // child used with consumer holds the widget which you don't want to build during changes
@@ -46,7 +46,7 @@ class ProductItem extends StatelessWidget {
               ),
               color: Theme.of(context).accentColor,
               onPressed: () {
-                cart.addItem(prod.id, prod.price, prod.title);
+                cart.addItem(prod.id, prod.price, prod.title, prod.imageUrl);
               },
             ),
             title: Text(

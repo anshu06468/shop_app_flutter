@@ -1,3 +1,5 @@
+// ignore: avoid_web_libraries_in_flutter
+// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './../providers/Products_provider.dart';
@@ -11,10 +13,42 @@ class ProductDetailScreen extends StatelessWidget {
     final loadedProduct =
         Provider.of<Products>(context, listen: false).findById(productId);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(loadedProduct.title),
+      // appBar: AppBar(
+      //   title: Text(loadedProduct.title),
+      // ),
+      appBar: PreferredSize(
+        preferredSize: Size(MediaQuery.of(context).size.width, 150.0),
+        child: Container(
+          padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          child: Padding(
+            padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+            child: Row(
+              children: [
+                IconButton(
+                    icon: Icon(Icons.arrow_back),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    }),
+                Text(
+                  loadedProduct.title,
+                  style: TextStyle(
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white),
+                ),
+              ],
+            ),
+          ),
+          decoration: BoxDecoration(
+            gradient: LinearGradient(
+                colors: [Colors.red, Colors.black87],
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter),
+          ),
+        ),
       ),
-      body: SingleChildScrollView(
+      body: Container(
+        color: Colors.black87,
         child: Column(children: [
           Container(
             height: 300,
@@ -45,7 +79,7 @@ class ProductDetailScreen extends StatelessWidget {
               textAlign: TextAlign.center,
               softWrap: true,
               style: TextStyle(
-                color: Colors.grey,
+                color: Colors.white,
               ),
             ),
           )

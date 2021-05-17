@@ -37,28 +37,50 @@ class _OrderItemState extends State<OrderItem> {
           if (_expanded)
             Container(
               padding: EdgeInsets.symmetric(horizontal: 15, vertical: 4),
-              height: min(widget.order.products.length * 20.0 + 10, 180),
+              height: min(widget.order.products.length * 50.0 + 10, 180),
+              // height: 1000,
               child: ListView.builder(
                   itemCount: widget.order.products.length,
                   itemBuilder: (ctx, i) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          widget.order.products[i].title,
-                          style: TextStyle(
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              widget.order.products[i].title,
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                           ),
-                        ),
-                        Text(
-                          "${widget.order.products[i].quantity}x \$${widget.order.products[i].price}",
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
+                          Expanded(
+                            flex: 1,
+                            child: Image.network(
+                              widget.order.products[i].imgSrc,
+                              // scale: 15,
+                              height: 40,
+                              width: 40,
+                              alignment: Alignment.center,
+
+                              fit: BoxFit.fitHeight,
+                            ),
                           ),
-                        ),
-                      ],
+                          Expanded(
+                            flex: 1,
+                            child: Text(
+                              "${widget.order.products[i].quantity}x \$${widget.order.products[i].price}",
+                              style: TextStyle(
+                                fontSize: 18,
+                                color: Colors.grey,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     );
                   }),
             )

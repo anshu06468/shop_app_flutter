@@ -5,12 +5,14 @@ class CartItem {
   final String title;
   final int quantity;
   final double price;
+  final String imgSrc;
 
   CartItem({
     @required this.id,
     @required this.title,
     @required this.quantity,
     @required this.price,
+    @required this.imgSrc,
   });
 }
 
@@ -47,6 +49,7 @@ class Cart with ChangeNotifier {
     String productId,
     double price,
     String title,
+    String imgSrc,
   ) {
     if (_items.containsKey(productId)) {
       _items.update(
@@ -56,6 +59,7 @@ class Cart with ChangeNotifier {
                 title: existingItem.title,
                 quantity: existingItem.quantity + 1,
                 price: existingItem.price,
+                imgSrc: existingItem.imgSrc,
               ));
     } else {
       _items.putIfAbsent(
@@ -64,7 +68,8 @@ class Cart with ChangeNotifier {
             id: DateTime.now().toString(),
             price: price,
             title: title,
-            quantity: 1),
+            quantity: 1,
+            imgSrc: imgSrc),
       );
       notifyListeners();
     }
