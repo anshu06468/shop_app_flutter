@@ -26,3 +26,5 @@ Provider - where you wants a rebuild whenever the notifyChange is called</br>
 Consumer - where you wants a small part to be rebuild not the whole class</br>
 Both are generic type
 
+
+### ModalRoute.of(Context).settings.arguments doesnot work in intistate

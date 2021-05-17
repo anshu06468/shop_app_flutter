@@ -72,6 +72,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
       // ),
       appBar: PreferredSize(
         child: Container(
+          // height: 80,
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
           child: Padding(
             padding: const EdgeInsets.only(top: 20.0, bottom: 20.0),
@@ -142,7 +143,7 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
           ),
           decoration: BoxDecoration(
               gradient: LinearGradient(
-                  colors: [Colors.red, Colors.black87],
+                  colors: [Color(0xff821c29), Colors.black87],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter),
               boxShadow: [

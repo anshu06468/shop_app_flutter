@@ -20,6 +20,7 @@ class ProductDetailScreen extends StatelessWidget {
         preferredSize: Size(MediaQuery.of(context).size.width, 150.0),
         child: Container(
           padding: EdgeInsets.only(top: MediaQuery.of(context).padding.top),
+          // margin: EdgeInsets.only(bottom: 10),
           child: Padding(
             padding: const EdgeInsets.only(top: 15.0, bottom: 15.0),
             child: Row(
@@ -41,7 +42,7 @@ class ProductDetailScreen extends StatelessWidget {
           ),
           decoration: BoxDecoration(
             gradient: LinearGradient(
-                colors: [Colors.red, Colors.black87],
+                colors: [Color(0xff821c29), Colors.black87],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter),
           ),
