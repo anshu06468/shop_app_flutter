@@ -11,6 +11,7 @@ class ProductsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     final products = showfav ? productsData.showFav : productsData.items;
+    print(products.length);
     if (products.length > 0)
       return GridView.builder(
           padding: const EdgeInsets.all(10),
@@ -29,8 +30,15 @@ class ProductsGrid extends StatelessWidget {
           });
     else
       return Center(
-        child: Image.network(
-          "https://lh3.googleusercontent.com/proxy/9rb29e5J4yj_zMwSxBXJnchvXb_30jUe-UrbMvM4tixnIm6L5ladaXuAmvdP_PDrpksv5K9WSOXUYMIQXCtLLGn15i1iT79Jaw",
+        child: Column(
+          children: [
+            Image.network(
+                "https://www.grabox.in/media/grabox//ohoshop_webapp/themes/shopper/assets/android/img/empty_product.svg"),
+            Text(
+              "No Favourites",
+              style: TextStyle(fontSize: 20, color: Colors.grey),
+            )
+          ],
         ),
       );
   }
