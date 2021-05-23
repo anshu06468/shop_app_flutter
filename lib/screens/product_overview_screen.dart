@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import './../providers/Products_provider.dart';
 import './../widgets/appDrawer.dart';
 import './../providers/cart.dart';
 import './../screens/cart_screen.dart';
-import 'package:shop/widgets/badge.dart';
+import './../widgets/badge.dart';
 import './../widgets/products_grid.dart';
 
 enum FilterOptions {
@@ -19,8 +20,41 @@ class ProductOverviewScreen extends StatefulWidget {
 
 class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
   int crossAxisCount = 2;
+  var _init = true;
+  var _isLoading = false;
   final GlobalKey<ScaffoldState> _scaffoldkey = new GlobalKey();
   bool _showOnlyfav = false;
+
+  @override
+  void didChangeDependencies() {
+    if (_init) {
+      setState(() {
+        _isLoading = true;
+      });
+      Provider.of<Products>(context).fetchAndSetProducts().catchError((error) {
+        print(error.toString());
+        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              error.toString(),
+            ),
+            duration: Duration(seconds: 2),
+          ),
+        );
+        // return Center(
+        //   child: Text("No Product"),
+        // );
+      }).then((_) {
+        setState(() {
+          _isLoading = false;
+        });
+      });
+    }
+    _init = false;
+    super.didChangeDependencies();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -186,7 +220,11 @@ class _ProductOverviewScreenState extends State<ProductOverviewScreen> {
               ],
             ),
             Expanded(
-              child: ProductsGrid(_showOnlyfav, crossAxisCount),
+              child: _isLoading
+                  ? Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : ProductsGrid(_showOnlyfav, crossAxisCount),
             ),
           ],
         ),

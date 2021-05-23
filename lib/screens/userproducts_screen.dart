@@ -7,6 +7,12 @@ import './../providers/Products_provider.dart';
 
 class UserProductScreen extends StatelessWidget {
   static const routeName = "/user-products";
+
+  Future<void> _refreshPage(BuildContext context) async {
+    return await Provider.of<Products>(context, listen: false)
+        .fetchAndSetProducts();
+  }
+
   @override
   Widget build(BuildContext context) {
     //final productList = Provider.of<Products>(context);
@@ -23,28 +29,31 @@ class UserProductScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Padding(
-        padding: EdgeInsets.all(8),
-        child: Consumer<Products>(
-          builder: (BuildContext context, productList, Widget child) {
-            return ListView.builder(
-                itemCount: productList.items.length,
-                itemBuilder: (_, i) {
-                  return Column(
-                    children: [
-                      UserProductItem(
-                        productList.items[i].id,
-                        productList.items[i].title,
-                        productList.items[i].imageUrl,
-                      ),
-                      Divider(
-                        // color: Colors.black,
-                        thickness: 1,
-                      ),
-                    ],
-                  );
-                });
-          },
+      body: RefreshIndicator(
+        onRefresh: () => _refreshPage(context),
+        child: Padding(
+          padding: EdgeInsets.all(8),
+          child: Consumer<Products>(
+            builder: (BuildContext context, productList, Widget child) {
+              return ListView.builder(
+                  itemCount: productList.items.length,
+                  itemBuilder: (_, i) {
+                    return Column(
+                      children: [
+                        UserProductItem(
+                          productList.items[i].id,
+                          productList.items[i].title,
+                          productList.items[i].imageUrl,
+                        ),
+                        Divider(
+                          // color: Colors.black,
+                          thickness: 1,
+                        ),
+                      ],
+                    );
+                  });
+            },
+          ),
         ),
       ),
     );

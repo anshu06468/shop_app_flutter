@@ -11,7 +11,7 @@ class ProductsGrid extends StatelessWidget {
   Widget build(BuildContext context) {
     final productsData = Provider.of<Products>(context);
     final products = showfav ? productsData.showFav : productsData.items;
-    print(products.length);
+    // print(products.length);
     if (products.length > 0)
       return GridView.builder(
           padding: const EdgeInsets.all(10),
@@ -35,7 +35,7 @@ class ProductsGrid extends StatelessWidget {
             Image.network(
                 "https://www.grabox.in/media/grabox//ohoshop_webapp/themes/shopper/assets/android/img/empty_product.svg"),
             Text(
-              "No Favourites",
+              "No Products",
               style: TextStyle(fontSize: 20, color: Colors.grey),
             )
           ],

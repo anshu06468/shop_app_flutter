@@ -9,7 +9,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final prod = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
-    // Consumer used to stop unneceesary reun of build
+    // Consumer used to stop unneceesary ruin of build
     // it helps to build only that part of data which requires that
 
     return ClipRRect(

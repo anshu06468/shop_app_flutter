@@ -1,5 +1,3 @@
-// ignore: avoid_web_libraries_in_flutter
-// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import './../providers/Products_provider.dart';
