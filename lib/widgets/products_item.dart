@@ -9,6 +9,7 @@ class ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     final prod = Provider.of<Product>(context, listen: false);
     final cart = Provider.of<Cart>(context, listen: false);
+    final _scaffold = ScaffoldMessenger.of(context);
     // Consumer used to stop unneceesary ruin of build
     // it helps to build only that part of data which requires that
 
@@ -30,7 +31,13 @@ class ProductItem extends StatelessWidget {
               builder: (ctx, prod, child) => IconButton(
                 // child used with consumer holds the widget which you don't want to build during changes
                 onPressed: () {
-                  prod.toggleFavouriteStatus();
+                  prod.toggleFavouriteStatus().catchError((error) {
+                    _scaffold.hideCurrentSnackBar();
+                    _scaffold.showSnackBar(SnackBar(
+                      content: Text(error.toString()),
+                      duration: Duration(seconds: 2),
+                    ));
+                  });
                 },
                 // label:child
                 icon: Icon(
