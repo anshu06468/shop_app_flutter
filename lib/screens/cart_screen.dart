@@ -40,16 +40,8 @@ class CartScreen extends StatelessWidget {
                   SizedBox(
                     width: 4,
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Provider.of<Orders>(context, listen: false).addOrder(
-                          cartDetails.items.values.toList(),
-                          cartDetails.totalAmount);
-                      cartDetails.clear();
-                    },
-                    child: Text("ORDER NOW"),
-                    style: TextButton.styleFrom(
-                        primary: Theme.of(context).primaryColor),
+                  OrderButton(
+                    cartDetails: cartDetails,
                   ),
                 ],
               ),
@@ -75,6 +67,48 @@ class CartScreen extends StatelessWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class OrderButton extends StatefulWidget {
+  const OrderButton({
+    Key key,
+    @required this.cartDetails,
+  }) : super(key: key);
+
+  final Cart cartDetails;
+
+  @override
+  _OrderButtonState createState() => _OrderButtonState();
+}
+
+class _OrderButtonState extends State<OrderButton> {
+  var _isLoading = false;
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: (widget.cartDetails.itemCount <= 0 || _isLoading)
+          ? null
+          : () async {
+              try {
+                setState(() {
+                  _isLoading = true;
+                });
+                await Provider.of<Orders>(context, listen: false).addOrder(
+                    widget.cartDetails.items.values.toList(),
+                    widget.cartDetails.totalAmount);
+                setState(() {
+                  _isLoading = false;
+                });
+              } catch (error) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(error.toString())));
+              }
+              widget.cartDetails.clear();
+            },
+      child: _isLoading ? CircularProgressIndicator() : Text("ORDER NOW"),
+      style: TextButton.styleFrom(primary: Theme.of(context).primaryColor),
     );
   }
 }

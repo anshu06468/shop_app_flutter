@@ -31,7 +31,7 @@ class Product with ChangeNotifier {
       await http.patch(
         url,
         body: json.encode({
-          "isFavourite": !isFavourite,
+          "isFavourite": isFavourite,
         }),
       );
     } catch (error) {
