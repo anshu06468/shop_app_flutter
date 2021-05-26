@@ -36,14 +36,12 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     _imgUrl.addListener(_updateImageUrl);
     super.initState();
   }
 
   @override
   void didChangeDependencies() {
-    // TODO: implement didChangeDependencies
     if (_isInit) {
       final productId = ModalRoute.of(context).settings.arguments as String;
       if (productId != null) {
@@ -131,7 +129,6 @@ class _EditProductScreenState extends State<EditProductScreen> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     _priceFocusNode.dispose();
     _decNode.dispose();
     _imageurlcontoller.dispose();
