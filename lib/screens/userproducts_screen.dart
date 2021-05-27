@@ -10,7 +10,7 @@ class UserProductScreen extends StatelessWidget {
 
   Future<void> _refreshPage(BuildContext context) async {
     return await Provider.of<Products>(context, listen: false)
-        .fetchAndSetProducts();
+        .fetchAndSetProducts(true);
   }
 
   @override
@@ -29,32 +29,40 @@ class UserProductScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () => _refreshPage(context),
-        child: Padding(
-          padding: EdgeInsets.all(8),
-          child: Consumer<Products>(
-            builder: (BuildContext context, productList, Widget child) {
-              return ListView.builder(
-                  itemCount: productList.items.length,
-                  itemBuilder: (_, i) {
-                    return Column(
-                      children: [
-                        UserProductItem(
-                          productList.items[i].id,
-                          productList.items[i].title,
-                          productList.items[i].imageUrl,
-                        ),
-                        Divider(
-                          // color: Colors.black,
-                          thickness: 1,
-                        ),
-                      ],
-                    );
-                  });
-            },
-          ),
-        ),
+      body: FutureBuilder(
+        future: _refreshPage(context),
+        builder: (ctx, snapshot) => snapshot.connectionState ==
+                ConnectionState.waiting
+            ? Center(
+                child: CircularProgressIndicator(),
+              )
+            : RefreshIndicator(
+                onRefresh: () => _refreshPage(context),
+                child: Padding(
+                  padding: EdgeInsets.all(8),
+                  child: Consumer<Products>(
+                    builder: (BuildContext context, productList, Widget child) {
+                      return ListView.builder(
+                          itemCount: productList.items.length,
+                          itemBuilder: (_, i) {
+                            return Column(
+                              children: [
+                                UserProductItem(
+                                  productList.items[i].id,
+                                  productList.items[i].title,
+                                  productList.items[i].imageUrl,
+                                ),
+                                Divider(
+                                  // color: Colors.black,
+                                  thickness: 1,
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                  ),
+                ),
+              ),
       ),
     );
   }

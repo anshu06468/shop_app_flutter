@@ -53,16 +53,16 @@ class _OrderScreenState extends State<OrderScreen> {
               );
             } else {
               return Consumer<Orders>(builder: (ctx, ordersItems, _) {
-                return ordersItems.item.length <= 0
+                return ordersItems.order.length <= 0
                     ? Center(
                         child: Image.network(
                             "https://www.grabox.in/media/grabox//ohoshop_webapp/themes/shopper/assets/android/img/empty_product.svg"),
                       )
                     : ListView.builder(
                         itemBuilder: (ctx, i) {
-                          return OrderItem(ordersItems.item[i]);
+                          return OrderItem(ordersItems.order[i]);
                         },
-                        itemCount: ordersItems.item.length,
+                        itemCount: ordersItems.order.length,
                       );
               });
             }

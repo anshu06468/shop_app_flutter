@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shop/screens/splash_screen.dart';
 import './providers/auth.dart';
 import './screens/auth_screen.dart';
 import './screens/edit_product_screen.dart';
@@ -24,16 +25,21 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
         providers: [
           ChangeNotifierProvider(
-            create: (_) => Products(),
-          ),
-          ChangeNotifierProvider(
             create: (_) => Auth(),
+          ),
+          ChangeNotifierProxyProvider<Auth, Products>(
+            update: (BuildContext context, auth, previousProduct) => Products(
+                auth.token,
+                previousProduct == null ? [] : previousProduct.items,
+                auth.userId),
           ),
           ChangeNotifierProvider(
             create: (_) => Cart(),
           ),
-          ChangeNotifierProvider(
-            create: (_) => Orders(),
+          ChangeNotifierProxyProvider<Auth, Orders>(
+            // create: (ctx) => Orders("df", []),
+            update: (ctx, auth, previousOrder) => Orders(auth.token,
+                previousOrder == null ? [] : previousOrder.order, auth.userId),
           ),
         ],
         child: Consumer<Auth>(builder: (ctx, auth, _) {
@@ -45,7 +51,15 @@ class MyApp extends StatelessWidget {
               accentColor: Colors.red,
               fontFamily: 'Lato',
             ),
-            home: auth.isAuth ? ProductOverviewScreen() : AuthScreen(),
+            home: auth.isAuth
+                ? ProductOverviewScreen()
+                : FutureBuilder(
+                    future: auth.tryautoLogin(),
+                    builder: (ctx, snapshot) =>
+                        snapshot.connectionState == ConnectionState.waiting
+                            ? SplashScreen()
+                            : AuthScreen(),
+                  ),
             // initialRoute: '/auth',
             routes: {
               ProductDetailScreen.routeName: (ctx) => ProductDetailScreen(),
